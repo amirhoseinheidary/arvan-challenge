@@ -9,6 +9,10 @@ export const useUserStore = defineStore("user", () => {
     userInfo.value = user;
     localStorage.setItem("arvan-token", user.token);
   };
+  const logoutUser = () => {
+    userInfo.value = null;
+    localStorage.removeItem("arvan-token");
+  };
   const handleAuthAction = async (type, formStore) => {
     const { user } =
       type === "register"
@@ -23,5 +27,5 @@ export const useUserStore = defineStore("user", () => {
     updateUserInfo(user);
   };
 
-  return { userInfo, isLoggedIn, handleAuthAction, getUserInfo };
+  return { userInfo, isLoggedIn, handleAuthAction, getUserInfo, logoutUser };
 });

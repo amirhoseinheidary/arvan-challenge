@@ -15,7 +15,18 @@ function register(params) {
     data: params,
   });
 }
+function getAllPosts(author, page = 1, count = 10) {
+  let offset = "";
+  if (page > 1) {
+    offset = "&offset=" + (page - 1) * count;
+  }
+  return request({
+    url: "/api/articles?author=" + author + "&count=" + count + offset,
+    method: "get",
+  });
+}
 export default {
   login,
   register,
+  getAllPosts,
 };

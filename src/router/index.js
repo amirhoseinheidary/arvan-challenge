@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import UserAthentication from "../views/UserAthentication.vue";
 import AdminDashboard from "../views/AdminDashboard.vue";
 import AdminPost from "../views/AdminPost.vue";
-import NotFound from "../views/NotFound.vue";
+// import NotFound from "../views/NotFound.vue";
 
 const routes = [
   {
@@ -21,18 +21,22 @@ const routes = [
     name: "Register",
     component: UserAthentication,
   },
-  {},
   {
-    path: "/AdminPost/create",
-    name: "AdminPostCreate",
+    path: "/articles/page/:id",
+    name: "Articles",
+    component: AdminDashboard,
+  },
+  {
+    path: "/articles/create",
+    name: "ArticleCreate",
     component: AdminPost,
   },
   {
-    path: "/AdminPost/update/[id]",
-    name: "AdminPostUpdate",
+    path: "/articles/update/:id",
+    name: "ArticleUpdate",
     component: AdminPost,
   },
-  { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
+  // { path: "/:catchAll(.*)", name: "NotFound", component: NotFound },
 ];
 
 const router = createRouter({
