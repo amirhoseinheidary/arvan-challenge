@@ -1,17 +1,19 @@
 <template>
-  <h1></h1>
+  <router-view/>
 </template>
 
 <script>
-
 export default {
   name: 'App',
-  components: {
-
-  }
 }
 </script>
 
 <style>
-
+  #app{
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 </style>
