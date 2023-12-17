@@ -6,6 +6,7 @@ import { createPinia } from "pinia";
 import router from "./router";
 import "./router/permission";
 import "./assets/styles/style.css";
+import './assets/tailwind.css'
 
 const pinia = createPinia();
 
