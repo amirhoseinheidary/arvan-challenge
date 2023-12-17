@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAsyncState } from "@vueuse/core";
 import { useUserStore } from '@/stores/useUserStore';
-import { formatError, toastHanlder, isStrongPassword,isValidEmail } from '@/utils';
+import { formatError, toastHanlder, isStrongPassword, isValidEmail } from '@/utils';
 
 let errors = ref({});
 let formErrors = ref({});
@@ -30,40 +30,40 @@ const { isLoading, execute: onSubmit } = useAsyncState(
   null,
   { immediate: false },
 )
-const validateField = (fieldName,isRegister) => {
-  if (isRegister){
+const validateField = (fieldName, isRegister) => {
+  if (isRegister) {
     switch (fieldName) {
-    case 'username':{
-      if (formStore.value[fieldName].length <= 4){
-        formErrors.value[fieldName] = 'The username must be at least 5 characters.';
-      }else{
-        formErrors.value[fieldName] = null
+      case 'username': {
+        if (formStore.value[fieldName].length <= 4) {
+          formErrors.value[fieldName] = 'The username must be at least 5 characters.';
+        } else {
+          formErrors.value[fieldName] = null
+        }
+        break;
       }
-      break;
+      case 'password': {
+        const result = isStrongPassword(formStore.value.password);
+
+        if (result != true) {
+          formErrors.value[fieldName] = result;
+        } else {
+          formErrors.value[fieldName] = null
+        }
+
+        break;
+      }
+      case 'email':
+
+        if (!isValidEmail(formStore.value.email)) {
+          formErrors.value[fieldName] = 'Please enter a valid Email.';
+        } else {
+          formErrors.value[fieldName] = null
+        }
+
+        break;
+      default:
+        formErrors.value[fieldName] = null;
     }
-    case 'password':{
-      const result = isStrongPassword(formStore.value.password) ;
-
-      if (result != true) {
-        formErrors.value[fieldName] = result;
-      }else{
-        formErrors.value[fieldName] = null
-      }
-
-      break;
-    }
-    case 'email':
-
-      if(!isValidEmail(formStore.value.email)){
-        formErrors.value[fieldName] = 'Please enter a valid Email.';
-      }else{
-        formErrors.value[fieldName] = null
-      }
-
-      break;
-    default:
-      formErrors.value[fieldName] = null;
-  }
   }
 };
 </script>
@@ -85,9 +85,9 @@ const validateField = (fieldName,isRegister) => {
           </p>
         </fieldset>
         <fieldset class="form-group mb-4">
-          <label> 
+          <label>
             <span class="block text-sm font-medium text-slate-700">Email</span>
-            <input v-model="formStore.email" required type="email" name="email" @keyup="validateField('email',isRegister)"
+            <input v-model="formStore.email" required type="email" name="email" @keyup="validateField('email', isRegister)"
               :class="{ 'ring-1 ring-red-500': formErrors.email != null }"
               class="peer block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6">
             <p class="mt-2 text-pink-600 text-sm" :class="{ 'visible': formErrors.email != null }">
@@ -100,8 +100,8 @@ const validateField = (fieldName,isRegister) => {
           <label>
             <span class="block text-sm font-medium text-slate-700">Password</span>
           </label>
-          <input v-model="formStore.password" required name="password" type="password" @keyup="validateField('password',isRegister)"
-            :class="{ 'ring-1 ring-red-500': formErrors.password != null }"
+          <input v-model="formStore.password" required name="password" type="password"
+            @keyup="validateField('password', isRegister)" :class="{ 'ring-1 ring-red-500': formErrors.password != null }"
             class="block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 focus:outline-none">
           <p class="mt-2 text-pink-600 text-sm" :class="{ 'visible': formErrors.password != null }">
             {{ formErrors.password }}
@@ -132,4 +132,5 @@ const validateField = (fieldName,isRegister) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}</style>
+}
+</style>

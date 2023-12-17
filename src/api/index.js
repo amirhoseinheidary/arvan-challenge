@@ -31,10 +31,32 @@ function deleteArticle(slug) {
     method: "delete",
   });
 }
-
+function getArticle(slug) {
+  return request({
+    url: `/api/articles/${slug}`,
+    method: "get",
+  });
+}
+function createArticle(params) {
+  return request({
+    url: "/api/articles",
+    method: "post",
+    data: params,
+  });
+}
+function updateArticle(params) {
+  return request({
+    url: `/api/articles/${params.slug}`,
+    method: "put",
+    data: { article: params.article },
+  });
+}
 export default {
   login,
   register,
   getAllPosts,
   deleteArticle,
+  getArticle,
+  createArticle,
+  updateArticle,
 };
