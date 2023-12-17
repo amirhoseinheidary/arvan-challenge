@@ -5,6 +5,8 @@ import { useUserStore } from '@/stores/useUserStore';
 import api from '@/api'
 import TheHeader from '../components/TheHeader';
 import TheSidebar from '../components/TheSidebar';
+import DeleteArticleButton from '../components/DeleteArticleButton';
+
 
 const { userInfo } = useUserStore();
 
@@ -48,14 +50,16 @@ onMounted(async () => {
             <tr v-if="articlesCount == 0">
               <td colspan="7">No Article added yet, add your first article now.</td>
             </tr>
-            <tr v-for="article in articles" :key="article.slug">
+            <tr v-for="article in   articles  " :key="article.slug">
               <td>#</td>
               <td>{{ article.title }}</td>
               <td>{{ article.author.username }}</td>
               <td>{{ article.tagList.join(',') }}</td>
               <td>{{ article.body }}</td>
               <td>{{ article.createdAt }}</td>
-              <td><button type="button" class="bg-red-400 text-white py-2 px-4 rounded">Delete</button></td>
+              <td>
+                <DeleteArticleButton :slug="article.slug" />
+              </td>
             </tr>
           </tbody>
         </table>
